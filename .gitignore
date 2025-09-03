@@ -1,0 +1,98 @@
+# =========================
+# Python
+# =========================
+__pycache__/
+*.py[cod]
+*$py.class
+*.pyo
+*.pyd
+start.sh
+
+# Virtual environments
+venv/
+env/
+ENV/
+.env/
+.env.*    # Archivos de entorno adicionales
+.venv/
+.env
+
+# pip
+pip-log.txt
+pip-delete-this-directory.txt
+
+# mypy
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Pyre type checker
+.pyre/
+
+# Pytest
+.pytest_cache/
+cache/
+nosetests.xml
+coverage.xml
+*.cover
+.hypothesis/
+
+# =========================
+# FastAPI / Starlette
+# =========================
+# Archivos de bases de datos locales
+*.sqlite3
+*.db
+*.db-journal
+
+# Logs
+*.log
+
+# =========================
+# IDEs y editores
+# =========================
+# VSCode
+.vscode/
+.history/
+
+# PyCharm
+.idea/
+*.iml
+*.iws
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# =========================
+# Docker
+# =========================
+# Docker build files
+docker-compose.override.yml
+docker-compose.override.*.yml
+*.dockerignore
+
+# Docker volumes
+volumes/
+tmp/
+*.pid
+
+# =========================
+# OS / system files
+# =========================
+# macOS
+.DS_Store
+
+# Windows
+Thumbs.db
+desktop.ini
+
+# =========================
+# Static / media files (optional)
+# =========================
+# Si usas uploads locales
+uploads/
+media/
+staticfiles/
+#My
+TODO

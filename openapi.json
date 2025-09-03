@@ -1,0 +1,209 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "TODO API",
+    "version": "1.0.0",
+    "description": "API para gestionar tareas y usuarios. Datos de ejemplo son placeholders."
+  },
+  "servers": [
+    {
+      "url": "https://api.example.com",
+      "description": "Servidor de producción"
+    }
+  ],
+  "components": {
+    "schemas": {
+      "Task": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "example": 9182 },
+          "title": { "type": "string", "example": "Tarea de ejemplo" },
+          "description": { "type": "string", "example": "Descripción de la tarea" },
+          "completed": { "type": "boolean", "example": true },
+          "user_id": { "type": "integer", "example": 4860 }
+        },
+        "required": ["title", "description"]
+      },
+      "User": {
+        "type": "object",
+        "properties": {
+          "id": { "type": "integer", "example": 7682 },
+          "email": { "type": "string", "example": "usuario@example.com" }
+        },
+        "required": ["email"]
+      },
+      "Token": {
+        "type": "object",
+        "properties": {
+          "access_token": { "type": "string", "example": "eyJhbGciOi..." },
+          "token_type": { "type": "string", "example": "bearer" }
+        },
+        "required": ["access_token", "token_type"]
+      }
+    },
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    }
+  },
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/tasks": {
+      "post": {
+        "summary": "Crear una nueva tarea",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/Task" }
+            }
+          }
+        },
+        "responses": {
+          "201": {
+            "description": "Tarea creada",
+            "content": {
+              "application/json": {
+                "schema": { "$ref": "#/components/schemas/Task" }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Obtener lista de tareas",
+        "parameters": [
+          {
+            "name": "skip",
+            "in": "query",
+            "schema": { "type": "integer", "default": 0 }
+          },
+          {
+            "name": "limit",
+            "in": "query",
+            "schema": { "type": "integer", "default": 100 }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Lista de tareas",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": { "$ref": "#/components/schemas/Task" }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/tasks/{task_id}": {
+      "get": {
+        "summary": "Obtener tarea por ID",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string", "example": "0218c610-a65d-4d8e-92e5-d25494d3c2bf" }
+          }
+        ],
+        "responses": {
+          "200": { "description": "Tarea encontrada", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Task" } } } },
+          "403": { "description": "Permisos insuficientes" },
+          "404": { "description": "Tarea no encontrada" }
+        }
+      },
+      "put": {
+        "summary": "Actualizar una tarea",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": { "schema": { "$ref": "#/components/schemas/Task" } }
+          }
+        },
+        "responses": {
+          "200": { "description": "Tarea actualizada", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Task" } } } }
+        }
+      },
+      "delete": {
+        "summary": "Eliminar una tarea",
+        "parameters": [
+          {
+            "name": "task_id",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": { "204": { "description": "Tarea eliminada" } }
+      }
+    },
+    "/users/me": {
+      "get": {
+        "summary": "Obtener perfil del usuario actual",
+        "responses": {
+          "200": { "description": "Perfil de usuario", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/User" } } } }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "summary": "Login de usuario",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "username": { "type": "string", "example": "usuario@example.com" },
+                  "password": { "type": "string", "example": "string" }
+                },
+                "required": ["username", "password"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Token de acceso", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/Token" } } } },
+          "401": { "description": "Credenciales inválidas" }
+        }
+      }
+    },
+    "/users/register": {
+      "post": {
+        "summary": "Registrar nuevo usuario",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": { "$ref": "#/components/schemas/User" }
+            }
+          }
+        },
+        "responses": {
+          "200": { "description": "Registro exitoso", "content": { "application/json": { "schema": { "$ref": "#/components/schemas/User" } } } },
+          "400": { "description": "Email ya registrado" }
+        }
+      }
+    }
+  }
+}
