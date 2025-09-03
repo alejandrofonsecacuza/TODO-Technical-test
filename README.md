@@ -77,7 +77,7 @@ curl -X POST "http://localhost:8000/users/register" \
 ### 2. Obtener un Token de Acceso (Login)
 
 ```bash
-curl -X POST "http://localhost:8000/users/token" \
+curl -X POST "http://localhost:8000/users/login" \
 -H "Content-Type: application/x-www-form-urlencoded" \
 -d "username=user@example.com&password=a_strong_password"
 ```
@@ -189,22 +189,31 @@ docker-compose exec web pytest
 
 ## 📂 Estructura del Proyecto
 
-```
+
+```markdown
 .
-├── alembic/              # Archivos de migración de Alembic
-├── app/                  # Directorio principal de la aplicación
-│   ├── auth/             # Lógica de autenticación y seguridad
-│   ├── core/             # Configuración de la aplicación
-│   ├── db/               # Modelos y lógica de base de datos
-│   ├── routers/          # Routers de la API (endpoints)
-│   ├── schemas/          # Esquemas Pydantic para validación
-│   └── main.py           # Archivo de entrada de la aplicación
-├── tests/                # Tests automatizados
-├── .env                  # Variables de entorno
-├── .env.example          # Ejemplo de variables de entorno
-├── docker-compose.yml    # Orquestación de servicios Docker
-├── Dockerfile            # Definición del contenedor de la API
-└── README.md             # Este archivo
+├── alembic/               # Archivos de migración de Alembic
+├── app/                   # Directorio principal de la aplicación
+│   ├── core/              # Configuración de la aplicación (settings, utils)
+│   ├── db/                # Conexión y modelos de base de datos
+│   │   ├── models/        # Definición de modelos ORM (SQLAlchemy)
+│   │   ├── session.py     # Configuración de la sesión/engine
+│   │   └── base.py        # Base declarativa de SQLAlchemy
+│   ├── dependens/         # Dependencias de seguridad y DB (FastAPI Depends)
+│   ├── api/               # Routers de la API (endpoints)
+│   │   └── v1/            # Versión 1 de la API con submódulos de rutas
+│   ├── schemas/           # Esquemas Pydantic para validación
+│   └── main.py            # Punto de entrada de la aplicación
+├── tests/                 # Tests automatizados (pytest)
+├── .env                   # Variables de entorno
+├── .env.example           # Ejemplo de variables de entorno
+├── docker-compose.yml     # Orquestación de servicios Docker
+├── openapi.json           # Especificación OpenAPI exportada
+├── requirements.txt       # Dependencias del proyecto
+├── Dockerfile             # Definición del contenedor de la API
+└── README.md              # Documentación principal
+
 ```
+
 
 
