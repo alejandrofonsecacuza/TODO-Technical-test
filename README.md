@@ -30,8 +30,8 @@ Se ha desarrollado una **API REST** utilizando **FastAPI** y **PostgreSQL** para
 1. Clona el repositorio:
 
 ```bash
-git clone <URL_DEL_REPOSITORIO>
-cd <NOMBRE_DEL_DIRECTORIO>
+git clone https://github.com/alejandrofonsecacuza/TODO-Technical-test.git
+cd TODO-Technical-test
 ````
 
 2. Crea un archivo de entorno:
